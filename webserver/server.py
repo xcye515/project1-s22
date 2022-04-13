@@ -1,18 +1,11 @@
 #!/usr/bin/env python2.7
 
 """
-Columbia W4111 Intro to databases
-Example webserver
+Columbia W4111 Intro to databases Spring 2022
+Webserver for Project 1
 
-To run locally
+Author: Estella Ye (xy2527), Will Wang (hw2869)
 
-    python server.py
-
-Go to http://localhost:8111 in your browser
-
-
-A debugger such as "pdb" may be helpful for debugging.
-Read about it online.
 """
 
 import os
@@ -29,15 +22,9 @@ app = Flask(__name__, template_folder=tmpl_dir)
 #
 #     postgresql://USER:PASSWORD@<IP_OF_POSTGRE_SQL_SERVER>/<DB_NAME>
 #
-# For example, if you had username ewu2493, password foobar, then the following line would be:
-#
-#     DATABASEURI = "postgresql://ewu2493:foobar@<IP_OF_POSTGRE_SQL_SERVER>/postgres"
-#
-# For your convenience, we already set it to the class database
-
 # Use the DB credentials you received by e-mail
-DB_USER = "YOUR_DB_USERNAME_HERE"
-DB_PASSWORD = "YOUR_DB_PASSWORD_HERE"
+DB_USER = "xy2527"
+DB_PASSWORD = "helloworld"
 
 DB_SERVER = "w4111.cisxo09blonu.us-east-1.rds.amazonaws.com"
 
@@ -51,8 +38,8 @@ engine = create_engine(DATABASEURI)
 
 
 # Here we create a test table and insert some values in it
-engine.execute("""DROP TABLE IF EXISTS test;""")
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
+ engine.execute("""DROP TABLE IF EXISTS test;""")
+ engine.execute("""CREATE TABLE IF NOT EXISTS test (
   id serial,
   name text
 );""")
