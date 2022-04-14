@@ -65,39 +65,40 @@ def teardown_request(exception):
 
 @app.route('/search_player')
 def search():
-    print(request.args)
+  print(request.args)
 
-    player_name = request.args["player_name"]
-    if player_name == "null":
-    	  if request.args["attr"] == "ability":
-        	query = "SELECT p.username, p.ability FROM Player AS p"
-        elif request.args["attr"] == "uid":
-        	query = "SELECT p.username, p.uid FROM Player AS p"
-    	  elif request.args["attr"] == "wid":
-       	 	query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
-    	  elif request.args["attr"] == "exp":
-        	query = "SELECT p.username, p.exp FROM Player AS p"
-    	  else:
-        	query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+  player_name = request.args["player_name"]
+  if player_name == "null":
+    if request.args["attr"] == "ability":
+      query = "SELECT p.username, p.ability FROM Player AS p"
+    elif request.args["attr"] == "uid":
+      query = "SELECT p.username, p.uid FROM Player AS p"
+    elif request.args["attr"] == "wid":
+      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+    elif request.args["attr"] == "exp":
+      query = "SELECT p.username, p.exp FROM Player AS p"
     else:
-    	if request.args["attr"] == "ability":
-        	query = "SELECT p.username, p.ability FROM Player AS p"
-    	elif request.args["attr"] == "uid":
-        	query = "SELECT p.username, p.uid FROM Player AS p"
-    	elif request.args["attr"] == "wid":
-        	query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
-    	elif request.args["attr"] == "exp":
-        	query = "SELECT p.username, p.exp FROM Player AS p"
-    	else:
-        	query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+      uery = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+  else:
+    if request.args["attr"] == "ability":
+      uery = "SELECT p.username, p.ability FROM Player AS p"
+    elif request.args["attr"] == "uid":
+      query = "SELECT p.username, p.uid FROM Player AS p"
+    elif request.args["attr"] == "wid":
+      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+    elif request.args["attr"] == "exp":
+      query = "SELECT p.username, p.exp FROM Player AS p"
+    else:
+      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
 
-    cursor = g.conn.execute(query)
-    table = []
-    for row in cursor:
-		table.append(row)
-    cursor.close() 
-    context = dict(data = table)
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+	  table.append(row)
 
+
+  cursor.close() 
+  context = dict(data = table)
   return render_template("index.html", **context)
 
 
@@ -111,8 +112,8 @@ def another():
 def add():
   name = request.form['name']
   print(name)
-  cmd = 'INSERT INTO test(name) VALUES (:name1), (:name2)';
-  g.conn.execute(text(cmd), name1 = name, name2 = name);
+  cmd = 'INSERT INTO test(name) VALUES (:name1), (:name2)'
+  g.conn.execute(text(cmd), name1 = name, name2 = name)
   return redirect('/')
 
 
