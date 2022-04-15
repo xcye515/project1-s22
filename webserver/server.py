@@ -66,7 +66,7 @@ def teardown_request(exception):
 @app.route('/')
 def index():
   player_name = 'Estella'
-  query = text("SELECT username, ability FROM Player WHERE username = 'Estella'")
+  query = text("SELECT username, ability FROM Player WHERE username = '%s'" % player_name)
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
@@ -83,7 +83,7 @@ def search():
   player_name = request.args["player_name"]
   if player_name == "null":
     if request.args["attr"] == "ability":
-      query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'", player_name)
+      query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     elif request.args["attr"] == "uid":
       query = text("SELECT p.username, p.uid FROM Player AS p WHERE p.username LIKE '%s'", player_name)
     elif request.args["attr"] == "wid":
