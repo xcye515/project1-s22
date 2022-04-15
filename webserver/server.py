@@ -101,7 +101,8 @@ def search():
     table.append(row) 
   cursor.close()
   context = dict(data = table)
-  return render_template("index.html", **context)
+  test = dict({'test1': 'test2', 'test3': 'test4' }})
+  return render_template("index.html", **test)
 
 
 @app.route('/another')
