@@ -184,6 +184,8 @@ def modify():
   context = dict(data=message)
   return render_template("index.html", **context)
 
+"""
+
 @app.route('/search', methods=['GET', 'POST'])
 def search_all():
   return render_template("search.html")
@@ -208,7 +210,7 @@ def world():
 def terrain():
   return render_template("search.html", **context)
 
-
+"""
 
 
 @app.route('/search_by_player', methods=['GET', 'POST'])
@@ -253,15 +255,17 @@ def search_by_player():
     table.append(row) 
   cursor.close()
   context = dict(data = table)
+
+
   return render_template("search_by_player.html", **context)
 
 
 
-
+"""
 @app.route('/alter_terrain', methods=['GET', 'POST'])
 def alter():
-
-  return render_template("search_by_player.html", **context)
+  return render_template("alter_terrain.html")
+"""
 
 if __name__ == "__main__":
   import click
