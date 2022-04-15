@@ -212,9 +212,12 @@ def terrain():
 
 """
 
-
-@app.route('/search_by_player', methods=['GET', 'POST'])
+@app.route('/search_by_player')
 def search_by_player():
+	return render_template("search_by_player.html")	
+
+@app.route('/search_by_player_implement', methods=['GET', 'POST'])
+def search_by_player_implement():
   print(request.args)
   player_name = request.args["player_name"]
 
