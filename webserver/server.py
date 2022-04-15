@@ -184,33 +184,98 @@ def modify():
   context = dict(data=message)
   return render_template("index.html", **context)
 
-"""
 
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search')
 def search_all():
   return render_template("search.html")
 
 @app.route('/search_item', methods=['GET', 'POST'])
 def item():
+  tool_type = request.args['tool_type']
+  if tool_type == "":
+    item_q = "SELECT * FROM Tool"
+  else:
+    tool_type = "'"+tool_type+"'"
+    item_q = text("SELECT * FROM Tool WHERE tool_type = %s" % tool_type)
+  cursor = g.conn.execute(item_q)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
   return render_template("search.html", **context)
 
 @app.route('/search_creature', methods=['GET', 'POST'])
 def creature():
+  type = request.args["type"]
+  if type == "":
+    if request.args["attr"] == "monster":
+      query = "SELECT * from Creature WHERE animal_type = NULL"
+    elif request.args["attr"] == "animal":
+      query = "SELECT * from Creature WHERE monster_type = NULL"
+    else:
+      query = "SELECT * from Creature"
+  else:
+    type = "'"+type+"'"
+    if request.args["attr"] == "monster":
+      query = text("SELECT * from Creature WHERE monster_type=%s"%type)
+    elif request.args["attr"] == "animal":
+      query = text("SELECT * from Creature WHERE animal_type=%s"%type)
+    else:
+      query = text("SELECT * from Creature WHERE animal_type=%s or monster_type=%s"%(type,type))
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
   return render_template("search.html", **context)
 
 @app.route('/search_achievement', methods=['GET', 'POST'])
 def achievement():
+  achievement_title = request.args["achievement_title"]
+  if achievement_title == "":
+    query = "SELECT * from Creature"
+  else:
+    achievement_title = "'"+achievement_title+"'"
+    query = text("SELECT * from Achievement WHERE achievement_title=%s"%achievement_title)
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
   return render_template("search.html", **context)
 
 @app.route('/search_world', methods=['GET', 'POST'])
 def world():
+  world_id = request.args["world_id"]
+  if world_id == "":
+    query = "SELECT * from World"
+  else:
+    query = text("SELECT * from World WHERE world_id=%s" % world_id)
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
   return render_template("search.html", **context)
 
 @app.route('/search_terrain', methods=['GET', 'POST'])
 def terrain():
+  terrain_id = request.args["terrain_id"]
+  if terrain_id == "":
+    query = "SELECT * from terrain"
+  else:
+    query = text("SELECT * from terrain WHERE terrain_id=%s" % terrain_id)
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
   return render_template("search.html", **context)
-
-"""
 
 @app.route('/search_by_player')
 def search_by_p():

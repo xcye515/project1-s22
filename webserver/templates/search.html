@@ -8,26 +8,94 @@
 
 
 <body>
-	<h1> Search Database</h1>
-	<form method="GET" action="/search_player">
-	<div> Search Player's Possession by name: <input type="text" name="player_name"> <input type="submit" value="search"></div>
-			<div> with attribute
-				<select name="attr">
-					<option value="null">All</option> 
-                    <option value="uid">User ID</option> 
-					<option value="wid">World ID</option>
-                    <option value="exp">Experience Point</option>
-                    <option value="ability">Ability</option>
-				</select>
-			</div>
-		</form>
-	</div>
-	
-	<div>
-    	{% for n in data %}
-    	<p>{{n}}<p>
-    	{% endfor %}
-  	</div>
+   <h1> Search Database</h1>
+
+   <form method="GET" action="/search">
+      <div> Query Tool by tool type (All fields must be filled):
+      <div> Search Tool: <input type="text" name="tool_type"> <input type="submit" value="search"></div>
+      </div>
+   </form>
+
+   <div>
+      {% for n in data %}
+      <p>{{n}}<p>
+      {% endfor %}
+   </div>
+
+
+
+   <form method="GET" action="/search">
+      <div> Query Creature by creature type (All fields must be filled):
+      <div> Search Creature: <input type="text" name="type"> <input type="submit" value="search"></div>
+         <div> with attribute
+            <select name="attr">
+               <option value="null">All</option>
+                    <option value="monster">Monster</option>
+               <option value="animal">Animal</option>
+            </select>
+         </div>
+      </div>
+   </form>
+
+   <div>
+      {% for n in data %}
+      <p>{{n}}<p>
+      {% endfor %}
+   </div>
+
+
+
+
+
+
+   <form method="GET" action="/search">
+      <div> Query Achievement by achievement title (All fields must be filled):
+      <div> Search Achievement: <input type="text" name="achievement_title"> <input type="submit" value="search"></div>
+      </div>
+   </form>
+
+   <div>
+      {% for n in data %}
+      <p>{{n}}<p>
+      {% endfor %}
+   </div>
+
+
+
+
+
+
+   <form method="GET" action="/search">
+      <div> Query World by world id (All fields must be filled):
+      <div> Search World: <input type="text" name="world_id"> <input type="submit" value="search"></div>
+      </div>
+   </form>
+
+   <div>
+      {% for n in data %}
+      <p>{{n}}<p>
+      {% endfor %}
+   </div>
+
+
+
+
+
+   <form method="GET" action="/search">
+      <div> Query Terrain by terrain id (All fields must be filled):
+      <div> Search Terrain: <input type="text" name="terrain_id"> <input type="submit" value="search"></div>
+      </div>
+   </form>
+
+   <div>
+      {% for n in data %}
+      <p>{{n}}<p>
+      {% endfor %}
+   </div>
+
+
+
+
 </body>
 
 
