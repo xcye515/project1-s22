@@ -136,21 +136,26 @@ def add():
     context = dict(data = message)
     return render_template("index.html", **context)
   
-  tmp_1 = uid + "," + "'" + name + "'" + "," + exp + "," + ability
-  cmd_player = text("INSERT INTO Player VALUES (%s);" % tmp_1)
-  g.conn.execute(cmd)
+  insert_player_txt = uid + "," + "'" + name + "'" + "," + exp + "," + ability
+  insert_player_cmd = text("INSERT INTO Player VALUES (%s);" % insert_player_txt)
+  g.conn.execute(insert_player_cmd)
+
+  get_world_coord = text("SELECT upper_x_coord, upper_y_coord FROM World WHERE world_id = %s" % world_id)
+  cursor = g.conn.execute(get_world_coord)
+  for row in cursor:
+    upper_x_coord = row[0]
+    upper_y_coord = row[0]
+  cursor.close()
+
+  insert_player_inworld = uid + "," + world_id + "," + 1 + "," + 1 + "," + upper_x_coord + "," + upper_y_coord
+  insert_player_inworld_cmd = text("INSERT INTO Player_in_World VALUES (%s);" % insert_player_inworld)
+  g.conn.execute(insert_player_inworld_cmd)
 
   message = ["Insert Successful!"]
   context = dict(data = message)
   return render_template("index.html", **context)
 
 
-
-
-@app.route('/login')
-def login():
-    abort(401)
-    this_is_never_executed()
 
 
 if __name__ == "__main__":
