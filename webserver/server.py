@@ -82,18 +82,18 @@ def search():
     elif request.args["attr"] == "exp":
       query = text("SELECT p.username, p.exp FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     else:
-      query = text("SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid AND p.username LIKE '%s'" % player_name)
+      query = text("SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid AND p.username LIKE '%s'" % player_name)
   else:
     if request.args["attr"] == "ability":
       query = "SELECT p.username, p.ability FROM Player AS p"
     elif request.args["attr"] == "uid":
       query = "SELECT p.username, p.uid FROM Player AS p"
     elif request.args["attr"] == "wid":
-      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
     elif request.args["attr"] == "exp":
       query = "SELECT p.username, p.exp FROM Player AS p"
     else:
-      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
 
   cursor = g.conn.execute(query)
   table = []
