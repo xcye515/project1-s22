@@ -16,13 +16,6 @@
       </div>
    </form>
 
-   <div>
-      {% for n in data %}
-      <p>{{n}}<p>
-      {% endfor %}
-   </div>
-
-
    <form method="GET" action="/search_creature">
       <div> Query Creature by creature type (All fields must be filled):
       <div> Search Creature: <input type="text" name="type"> <input type="submit" value="search"></div>
@@ -36,49 +29,17 @@
       </div>
    </form>
 
-   <div>
-      {% for n in data %}
-      <p>{{n}}<p>
-      {% endfor %}
-   </div>
-
-
-
-
-
-
    <form method="GET" action="/search_achievement">
       <div> Query Achievement by achievement title (All fields must be filled):
       <div> Search Achievement: <input type="text" name="achievement_title"> <input type="submit" value="search"></div>
       </div>
    </form>
 
-   <div>
-      {% for n in data %}
-      <p>{{n}}<p>
-      {% endfor %}
-   </div>
-
-
-
-
-
-
    <form method="GET" action="/search_world">
       <div> Query World by world id (All fields must be filled):
       <div> Search World: <input type="text" name="world_id"> <input type="submit" value="search"></div>
       </div>
    </form>
-
-   <div>
-      {% for n in data %}
-      <p>{{n}}<p>
-      {% endfor %}
-   </div>
-
-
-
-
 
    <form method="GET" action="/search_terrain">
       <div> Query Terrain by terrain id (All fields must be filled):
