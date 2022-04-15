@@ -9,8 +9,6 @@ Author: Estella Ye (xy2527), Will Wang (hw2869)
 """
 
 import os
-from re import A
-from tkinter import E
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
