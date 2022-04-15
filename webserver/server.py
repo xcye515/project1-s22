@@ -186,6 +186,45 @@ def modify():
   context = dict(data=message)
   return render_template("index.html", **context)
 
+@app.route('/search', methods=['GET', 'POST'])
+def search_all():
+  return render_template("search.html")
+
+@app.route('/search_item', methods=['GET', 'POST'])
+def item():
+  return render_template("search.html", **context)
+
+@app.route('/search_creature', methods=['GET', 'POST'])
+def creature():
+  return render_template("search.html", **context)
+
+@app.route('/search_achievement', methods=['GET', 'POST'])
+def achievement():
+  return render_template("search.html", **context)
+
+@app.route('/search_world', methods=['GET', 'POST'])
+def world():
+  return render_template("search.html", **context)
+
+@app.route('/search_terrain', methods=['GET', 'POST'])
+def terrain():
+  return render_template("search.html", **context)
+
+
+
+
+@app.route('/search_by_player', methods=['GET', 'POST'])
+def search_by_player():
+
+  return render_template("search_by_player.html", **context)
+
+
+
+
+@app.route('/alter_terrain', methods=['GET', 'POST'])
+def search_by_player():
+
+  return render_template("search_by_player.html", **context)
 
 if __name__ == "__main__":
   import click
