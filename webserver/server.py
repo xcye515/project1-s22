@@ -63,7 +63,11 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
-@app.route('/', Method=["GET"])
+@app.route('/')
+def index():
+  return render_template("index.html")
+
+@app.route('/search_player', Method=["GET"])
 def search():
   print(request.args)
 
