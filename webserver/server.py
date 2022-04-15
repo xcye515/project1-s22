@@ -229,6 +229,7 @@ def search_by_player_implement():
   player_name_tmp = "'" + player_name + "'"
   get_uid = text("SELECT uid FROM Player WHERE username = %s" % player_name_tmp)
   cursor = g.conn.execute(get_uid)
+  uid = ''
   for row in cursor:
     uid = row[0]
   cursor.close()
