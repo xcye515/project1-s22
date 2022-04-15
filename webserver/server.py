@@ -67,7 +67,7 @@ def teardown_request(exception):
 def index():
   return render_template("index.html")
 
-@app.route('/search_player', methods=["GET"])
+@app.route('/search_player', methods=["GET", "POST"])
 def search():
   print(request.args)
 
@@ -101,9 +101,7 @@ def search():
     table.append(row) 
   cursor.close()
   context = dict(data = table)
-  test = {'test1': 'test2', 'test3': 'test4' }
-  return render_template("index.html", first='no1',sec='no2',third='no3')
-  #return render_template("index.html", **test)
+  return render_template("index.html", **context)
 
 
 @app.route('/another')
