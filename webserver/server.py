@@ -382,7 +382,7 @@ def alter_terrain():
   player_id = request.args["player_id"]
   terrain_id = request.args["terrain_id"]
   
-  if not player_id.isdigit() or not terrain_id.isdigit():
+  if (player_id != "" and not player_id.isdigit()) and (terrain_id != "" and not terrain_id.isdigit()):
     message = ["Bad Input. Rejected!"]
     context = dict(data=message)
     return render_template("alter_terrain.html", **context)
