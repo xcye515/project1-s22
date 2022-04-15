@@ -260,7 +260,7 @@ def achievement():
   if achievement_title == "":
     query = "SELECT * from Achievement"
   else:
-    achievement_title = "'"+achievement_title+"'"
+    #achievement_title = "'"+achievement_title+"'"
     query = "SELECT * from Achievement WHERE achievement_title=%(achievement_title)s"
   cursor = g.conn.execute(query, {'achievement_title': achievement_title})
   table = []
@@ -295,7 +295,7 @@ def terrain():
   if terrain_type == "":
     query = "SELECT * from terrain"
   else:
-    terrain_type = "'" + terrain_type + "'"
+    #terrain_type = "'" + terrain_type + "'"
     query = "SELECT * from terrain WHERE terrain_type=%(terrain_type)s"
   cursor = g.conn.execute(query, {'terrain_type':terrain_type})
   table = []
@@ -321,9 +321,9 @@ def search_by_player_implement():
     context = dict(data = message)
     return render_template("search_by_player.html", **context)
 
-  player_name_tmp = "'" + player_name + "'"
-  get_uid = "SELECT uid FROM Player WHERE username = %(player_name_tmp)s"
-  cursor = g.conn.execute(get_uid, {'player_name_tmp': player_name_tmp})
+  #player_name_tmp = "'" + player_name + "'"
+  get_uid = "SELECT uid FROM Player WHERE username = %(player_name)s"
+  cursor = g.conn.execute(get_uid, {'player_name': player_name})
   uid = ''
   for row in cursor:
     uid = row[0]
