@@ -375,6 +375,8 @@ def alter_terrain():
     query = text("SELECT * from player_alters_terrain WHERE terrain_id = %s AND uid = %s" % (terrain_id,player_id))
   cursor = g.conn.execute(query)
   table = []
+  header = ['UID', 'Ability', 'Terrain ID', 'Terrain Altitude', 'Record ID']
+  table.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
