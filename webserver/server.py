@@ -155,7 +155,35 @@ def add():
   context = dict(data = message)
   return render_template("index.html", **context)
 
+@app.route('/modify', methods=['GET', 'POST'])
+def modify():
+  uid = request.args['exist_uid']
+  exp = request.args['exist_exp']
 
+  if uid == '' or exp == '':
+    message = ["Please do not leave any field blank"]
+    context = dict(data=message)
+    return render_template("index.html", **context)
+
+  check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %s" % uid)
+  cursor = g.conn.execute(check_query)
+  exists = 0
+  for row in cursor:
+    exists = row[0]
+  cursor.close()
+
+  if exists == 0:
+    message = ["Player with the given uid does not exist. If you want to add this player, please use the add player function."]
+    context = dict(data=message)
+    return render_template("index.html", **context)
+
+  delete_temp = "SET exp = " + exp
+  delete_cmd = text("UPDATE Player %s WHERE uid = %s" % (delete_temp, str(uid)))
+  g.conn.execute(delete_cmd)
+  
+  message = ["Modify Successful!"]
+  context = dict(data=message)
+  return render_template("index.html", **context)
 
 
 if __name__ == "__main__":
