@@ -133,6 +133,11 @@ def add():
     context = dict(data = message)
     return render_template("index.html", **context)
   
+  if not uid.isdigit() or uid == '0' or not exp.isdigit() or exp == '0' or not ability.isdigit() or ability == '0' or not world_id.isdigit() or world_id == '0' or len(world_id)>=2:
+    message = ["Bad Input! Rejected!"]
+    context = dict(data = message)
+    return render_template("index.html", **context)
+
   check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %s" % uid)
   cursor = g.conn.execute(check_query)
   exists = 0
