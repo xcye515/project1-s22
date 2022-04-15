@@ -65,7 +65,15 @@ def teardown_request(exception):
 
 @app.route('/')
 def index():
-  return render_template("index.html")
+  query = text("SELECT p.username FROM Player AS p")
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row) 
+  cursor.close()
+  context = dict(data = table)
+
+  return render_template("index.html", **context)
 
 @app.route('/search_player', methods=["GET", "POST"])
 def search():
