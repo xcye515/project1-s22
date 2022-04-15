@@ -147,7 +147,7 @@ def add():
     upper_y_coord = row[0]
   cursor.close()
 
-  insert_player_inworld = uid + "," + world_id + "," + 1 + "," + 1 + "," + upper_x_coord + "," + upper_y_coord
+  insert_player_inworld = uid + "," + world_id + "," + str(1) + "," + str(1) + "," + upper_x_coord + "," + upper_y_coord
   insert_player_inworld_cmd = text("INSERT INTO Player_in_World VALUES (%s);" % insert_player_inworld)
   g.conn.execute(insert_player_inworld_cmd)
 
