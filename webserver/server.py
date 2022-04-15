@@ -161,9 +161,9 @@ def add():
 
 
   insert_player_inworld = uid + "," + world_id + "," + str(1) + "," + str(1) + "," + str(upper_x_coord) + "," + str(upper_y_coord)
-  insert_player_inworld_cmd = "INSERT INTO Player_in_World VALUES (%(insert)s);"
+  insert_player_inworld_cmd = text("INSERT INTO Player_in_World VALUES (%s);" % insert_player_inworld)
   
-  g.conn.execute(insert_player_inworld_cmd, {'insert': insert_player_inworld})
+  g.conn.execute(insert_player_inworld_cmd)
   message = ["Insert Successful!"]
   context = dict(data = message)
   return render_template("index.html", **context)
