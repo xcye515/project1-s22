@@ -244,18 +244,24 @@ def search_by_player_implement():
     world_id = row[0]
   cursor.close()
 
+  header = []
   if player_name != '':
     if request.args["attr"] == "msg":
       query = text("SELECT content, time FROM send_message WHERE uid = %s" % uid)
+      header = ['Content', 'Time']
     elif request.args["attr"] == "item":
       query = text("SELECT tool_id, since FROM player_owns_tool WHERE uid = %s" % uid)
+      header = ['Tool_ID', 'Since When']
     elif request.args["attr"] == "achive":
-      query = text("SELECT username, achievement_title, time FROM player_achieves WHERE uid = %s" % uid)
+      query = text("SELECT achievement_title, time FROM player_achieves WHERE uid = %s" % uid)
+      header = ['achievement_title', 'Since When']
     elif request.args["attr"] == "others":
       query = text("SELECT uid, x_coordinate, y_coordinate FROM Player_In_World WHERE world_id = %s" % world_id)
+      header = ['Player UID', 'x_coord', 'y_coord']
 
   cursor = g.conn.execute(query)
   table = []
+  table.append(header)
   for row in cursor:
     table.append(row) 
   cursor.close()
