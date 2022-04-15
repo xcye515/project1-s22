@@ -78,30 +78,41 @@ def search_player():
   if player_name != '':
     player_name_tmp = "%" + player_name + "%"
     if request.args["attr"] == "ability":
+      header = ['Username', 'Ability']
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name_tmp)
     elif request.args["attr"] == "uid":
+      header = ['Username', 'UID']
       query = text("SELECT p.username, p.uid FROM Player AS p WHERE p.username LIKE '%s'" % player_name_tmp)
     elif request.args["attr"] == "wid":
+      header = ['Username', 'World ID']
       query = text("SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World as pinw WHERE p.uid = pinw.uid AND p.username LIKE '%s'" % player_name_tmp)
     elif request.args["attr"] == "exp":
+      header = ['Username', 'EXP Point']
       query = text("SELECT p.username, p.exp FROM Player AS p WHERE p.username LIKE '%s'" % player_name_tmp)
     else:
+      header = ['Username', 'UID', 'World ID', 'EXP Point', 'Ability']
       query = text("SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid AND p.username LIKE '%s'" % player_name_tmp)
   else:
     if request.args["attr"] == "ability":
+      header = ['Username', 'Ability']
       query = "SELECT p.username, p.ability FROM Player AS p"
     elif request.args["attr"] == "uid":
+      header = ['Username', 'UID']
       query = "SELECT p.username, p.uid FROM Player AS p"
     elif request.args["attr"] == "wid":
+      header = ['Username', 'World ID']
       query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
     elif request.args["attr"] == "exp":
+      header = ['Username', 'EXP Point']
       query = "SELECT p.username, p.exp FROM Player AS p"
     else:
+      header = ['Username', 'UID', 'World ID', 'EXP Point', 'Ability']
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
 
 
   cursor = g.conn.execute(query)
   table = []
+  table.append(header)
   for row in cursor:
     table.append(row) 
   cursor.close()
