@@ -199,6 +199,8 @@ def item():
     item_q = text("SELECT * FROM Tool WHERE tool_type = %s" % tool_type)
   cursor = g.conn.execute(item_q)
   table = []
+  header = ['Tool ID', 'Tool Type']
+  table.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
@@ -225,6 +227,8 @@ def creature():
       query = text("SELECT * from Creature WHERE animal_type=%s or monster_type=%s"%(type,type))
   cursor = g.conn.execute(query)
   table = []
+  header = ['Creature ID', 'Animal Type', 'Monster Type', 'Name']
+  table.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
@@ -241,6 +245,8 @@ def achievement():
     query = text("SELECT * from Achievement WHERE achievement_title=%s"%achievement_title)
   cursor = g.conn.execute(query)
   table = []
+  header = ['Achievement Title', 'Description']
+  table.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
@@ -256,6 +262,8 @@ def world():
     query = text("SELECT * from World WHERE world_id=%s" % world_id)
   cursor = g.conn.execute(query)
   table = []
+  header = ['World ID', 'World Upper x Coord', 'World Upper y Coord']
+  table.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
@@ -272,6 +280,8 @@ def terrain():
     query = text("SELECT * from terrain WHERE terrain_type=%s" % terrain_type)
   cursor = g.conn.execute(query)
   table = []
+  header = ['Terrain ID', 'Terrain Type', 'Initial Altitude']
+  talbe.append(header)
   for row in cursor:
     table.append(row)
   cursor.close()
