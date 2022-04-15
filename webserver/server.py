@@ -214,7 +214,7 @@ def item():
   if tool_type == "":
     item_q = "SELECT * FROM Tool"
   else:
-    tool_type = "'"+tool_type+"'"
+    #tool_type = "'"+tool_type+"'"
     item_q = "SELECT * FROM Tool WHERE tool_type = %(tool_type)s"
   cursor = g.conn.execute(item_q, {'tool_type' : tool_type})
   table = []
