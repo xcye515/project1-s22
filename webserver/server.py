@@ -136,13 +136,14 @@ def add():
     context = dict(data = message)
     return render_template("index.html", **context)
   
-  tmp = uid + "," + "'" + name + "'" + "," + world_id + "," + exp + "," + ability
-  cmd = text("INSERT INTO Player VALUES (%s);" % tmp)
+  tmp_1 = uid + "," + "'" + name + "'" + "," + exp + "," + ability
+  cmd_player = text("INSERT INTO Player VALUES (%s);" % tmp_1)
   g.conn.execute(cmd)
 
   message = ["Insert Successful!"]
   context = dict(data = message)
   return render_template("index.html", **context)
+
 
 
 
