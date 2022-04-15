@@ -69,10 +69,8 @@ def index():
   return render_template("index.html")
 
 @app.route('/search_player', methods=["GET", "POST"])
-def search():
+def search_player():
   print(request.args)
-  print(request.args["attr"])
-  print(request.args["player_name"])
   player_name = request.args["player_name"]
   
   header = []
@@ -215,14 +213,53 @@ def terrain():
 
 @app.route('/search_by_player', methods=['GET', 'POST'])
 def search_by_player():
+  print(request.args)
+  player_name = request.args["player_name"]
 
+  if player_name == '':
+    message = ["Please do not leave any field blank"]
+    context = dict(data = message)
+    return render_template("search_by_player.html", **context)
+
+  get_uid = text("SELECT uid FROM Player WHERE username = %s" % player_name)
+  cursor = g.conn.execute(get_uid)
+  for row in cursor:
+    uid = row[0]
+  cursor.close()
+  if uid == '':
+    message = ["Player does not exist"]
+    context = dict(data = message)
+    return render_template("search_by_player.html", **context)
+
+  get_world_id = text("SELECT world_id FROM Player_in_World WHERE uid = %s" % uid)
+  cursor = g.conn.execute(get_world_id)
+  for row in cursor:
+    world_id = row[0]
+  cursor.close()
+
+  if player_name != '':
+    if request.args["attr"] == "msg":
+      query = text("SELECT content, time FROM send_message WHERE uid = %s" % uid)
+    elif request.args["attr"] == "item":
+      query = text("SELECT tool_id, since FROM player_owns_tool WHERE uid = %s" % uid)
+    elif request.args["attr"] == "achive":
+      query = text("SELECT username, achievement_title, time FROM player_achieves WHERE uid = %s" % uid)
+    elif request.args["attr"] == "others":
+      query = text("SELECT uid, x_coordinate, y_coordinate FROM Player_In_World WHERE world_id = %s" % world_id)
+
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row) 
+  cursor.close()
+  context = dict(data = table)
   return render_template("search_by_player.html", **context)
 
 
 
 
 @app.route('/alter_terrain', methods=['GET', 'POST'])
-def search_by_player():
+def alter():
 
   return render_template("search_by_player.html", **context)
 
