@@ -361,7 +361,7 @@ def search_by_player_implement():
 def player_alters_terrain():
   return render_template("alter_terrain.html")
 
-@app.route('/alter_terrain', methods=['GET', 'POST'])
+@app.route('/alter_terrain_implement', methods=['GET', 'POST'])
 def alter_terrain():
   player_id = request.args["player_id"]
   terrain_id = request.args["terrain_id"]
