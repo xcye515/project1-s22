@@ -180,7 +180,7 @@ def modify():
     context = dict(data=message)
     return render_template("index.html", **context)
 
-  if not exp.isdigit():
+  if not exp.isdigit() or exp == "0":
     message = ["Bad input for experience! Rejected"]
     context = dict(data=message)
     return render_template("index.html", **context)
