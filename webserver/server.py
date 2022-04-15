@@ -235,7 +235,7 @@ def creature():
 def achievement():
   achievement_title = request.args["achievement_title"]
   if achievement_title == "":
-    query = "SELECT * from Creature"
+    query = "SELECT * from Achievement"
   else:
     achievement_title = "'"+achievement_title+"'"
     query = text("SELECT * from Achievement WHERE achievement_title=%s"%achievement_title)
