@@ -237,13 +237,13 @@ def creature():
     else:
       query = "SELECT * from Creature"
   else:
-    type = "'"+type+"'"
+    #type = "'"+type+"'"
     if request.args["attr"] == "monster":
       query = "SELECT * from Creature WHERE monster_type=%(type)s"
     elif request.args["attr"] == "animal":
       query = "SELECT * from Creature WHERE animal_type=%(type)s"
     else:
-      query = "SELECT * from Creature WHERE animal_type=%s or monster_type=%(type)s"
+      query = "SELECT * from Creature WHERE animal_type=%(type)s or monster_type=%(type)s"
   cursor = g.conn.execute(query, {'type':type})
   table = []
   header = ['Creature ID', 'Animal Type', 'Monster Type', 'Name']
