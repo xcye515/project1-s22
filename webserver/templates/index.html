@@ -9,9 +9,18 @@
 
 <body>
 	<h1> Minecraft Server Database</h1>
+
+	<div>
+		<h3><a href='/'>Player Search</a></h3>
+		<h3><a href='/search_item'>Item Search</a></h3>
+		<h3><a href='/search_creature'>Creature Search</a></h3>
+		<h3><a href='/modify_terrain'>Modify Terrain Altitute</a></h3>
+	</div>
+
+
 	<form method="GET" action="/search_player">
-	<div> Search Player (Leave it blank to see all): <input type="text" name="player_name"> <input type="submit" value="search"></div>
-			<div> with attributes
+	<div> Search player by name(Leave it blank to see all): <input type="text" name="player_name"> <input type="submit" value="search"></div>
+			<div> with attribute
 				<select name="attr">
 					<option value="null">All</option> 
                     <option value="uid">User ID</option> 
@@ -22,6 +31,29 @@
 			</div>
 		</form>
 	</div>
+
+	
+	<form method="POST" action="/add">
+		<div> Add New Player (All fields must be filled): 
+			<input type="text" placeholder="New Player's Name (text)" name="new_player_name"> 
+			<input type="text" placeholder="New Player's UID (int)" name="new_uid">  
+			<input type="text" placeholder="World ID (int)" name="new_world_id"> 
+			<input type="text" placeholder="Exp point (int)" name="new_exp">  
+			<input type="text" placeholder="Ability (int)" name="new_ability">  
+			<input type="submit" value="add">
+		</div>
+	</form>
+
+	<form method="POST" action="/modify">
+		<div> Modify Existing Player (All fields must be filled): 
+			<input type="text" placeholder="New Player's Name (text)" name="new_player_name"> 
+			<input type="text" placeholder="New Player's UID (int)" name="new_uid">  
+			<input type="text" placeholder="World ID (int)" name="new_world_id"> 
+			<input type="text" placeholder="Exp point (int)" name="new_exp">  
+			<input type="text" placeholder="Ability (int)" name="new_ability">  
+			<input type="submit" value="modify">
+		</div>
+	</form>
 	
 	<div>
     	{% for n in data %}
