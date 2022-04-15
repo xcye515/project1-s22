@@ -74,9 +74,8 @@ def search_player():
   player_name = request.args["player_name"]
   
   header = []
-
+  player_name_tmp = "%" + player_name + "%"
   if player_name != '':
-    player_name_tmp = "%" + player_name + "%"
     if request.args["attr"] == "ability":
       header = ['Username', 'Ability']
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%(p)s'")
