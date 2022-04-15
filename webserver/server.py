@@ -97,7 +97,7 @@ def search():
     else:
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
 
-"""
+  """
   if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT * FROM Player")
