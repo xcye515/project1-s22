@@ -345,6 +345,9 @@ def search_by_player_implement():
     elif request.args["attr"] == "others":
       query = text("SELECT uid, x_coordinate, y_coordinate FROM Player_In_World WHERE world_id = %s" % world_id)
       header = ['Player UID', 'x_coord', 'y_coord']
+    elif request.args["attr"] == "interact":
+      query = text("SELECT uid, cid, tool_id, tool_type, time FROM player_interacts_with_creatures_using_tools WHERE uid = %s" % uid)
+      header = ['Player UID', 'Creature ID', 'Tool ID', 'Tool Type', 'Time']
 
   cursor = g.conn.execute(query)
   table = []
