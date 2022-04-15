@@ -75,14 +75,13 @@ def search():
   print(request.args["player_name"])
   player_name = request.args["player_name"]
   
-  """
   if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     elif request.args["attr"] == "uid":
       query = text("SELECT p.username, p.uid FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     elif request.args["attr"] == "wid":
-      query = text("SELECT p.username, pinw.world_id FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
+      query = text("SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World as pinw WHERE p.uid = pinw.uid AND p.username LIKE '%s'" % player_name)
     elif request.args["attr"] == "exp":
       query = text("SELECT p.username, p.exp FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     else:
@@ -98,33 +97,7 @@ def search():
       query = "SELECT p.username, p.exp FROM Player AS p"
     else:
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
-  """
 
-  if player_name != '':
-    print("in if",player_name)
-    if request.args["attr"] == "ability":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "uid":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "wid":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "exp":
-      query = text("SELECT * FROM Player")
-    else:
-      query = text("SELECT * FROM Player")
-  else:
-    print("in else",player_name)
-    if request.args["attr"] == "ability":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "uid":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "wid":
-      query = text("SELECT * FROM Player")
-    elif request.args["attr"] == "exp":
-      query = text("SELECT * FROM Player")
-    else:
-      query = text("SELECT * FROM Player")
-  
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
