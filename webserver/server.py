@@ -72,6 +72,7 @@ def search():
   print(request.args)
 
   player_name = request.args["player_name"]
+  """
   if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
@@ -94,6 +95,32 @@ def search():
       query = "SELECT p.username, p.exp FROM Player AS p"
     else:
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
+
+  """
+
+
+  if player_name != '':
+    if request.args["attr"] == "ability":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "uid":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "wid":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "exp":
+      query = text("SELECT * FROM Player")
+    else:
+      query = text("SELECT * FROM Player")
+  else:
+    if request.args["attr"] == "ability":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "uid":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "wid":
+      query = text("SELECT * FROM Player")
+    elif request.args["attr"] == "exp":
+      query = text("SELECT * FROM Player")
+    else:
+      query = text("SELECT * FROM Player")
 
   cursor = g.conn.execute(query)
   table = []
