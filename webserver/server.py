@@ -27,6 +27,7 @@ DB_USER = "xy2527"
 DB_PASSWORD = "helloworld"
 
 DB_SERVER = "w4111.cisxo09blonu.us-east-1.rds.amazonaws.com"
+DB_SERVER = "w4111project1part2db.cisxo09blonu.us-east-1.rds.amazonaws.com/proj1part2"
 
 DATABASEURI = "postgresql://"+DB_USER+":"+DB_PASSWORD+"@"+DB_SERVER+"/proj1part2"
 
@@ -72,7 +73,7 @@ def search():
   print(request.args)
 
   player_name = request.args["player_name"]
-  """
+
   if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
@@ -96,9 +97,7 @@ def search():
     else:
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
 
-  """
-
-
+"""
   if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT * FROM Player")
@@ -121,6 +120,7 @@ def search():
       query = text("SELECT * FROM Player")
     else:
       query = text("SELECT * FROM Player")
+  """
 
   cursor = g.conn.execute(query)
   table = []
