@@ -72,7 +72,7 @@ def search():
   print(request.args)
 
   player_name = request.args["player_name"]
-  if player_name == "null":
+  if player_name != '':
     if request.args["attr"] == "ability":
       query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'" % player_name)
     elif request.args["attr"] == "uid":
