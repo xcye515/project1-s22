@@ -35,18 +35,18 @@
 	<form method="GET" action="/add">
 		<div> Add New Player (All fields must be filled): 
 			<input type="text" placeholder="New Player's Name (text)" name="new_player_name"> 
-			<input type="text" placeholder="New Player's UID (int)" name="new_uid">  
+			<input type="text" placeholder="New Player's UID (Positive Integer)" name="new_uid">  
 			<input type="text" placeholder="World ID (int between 1 - 10)" name="new_world_id"> 
-			<input type="text" placeholder="Exp point (int)" name="new_exp">  
-			<input type="text" placeholder="Ability (int)" name="new_ability">  
+			<input type="text" placeholder="Exp point (Positive Integer)" name="new_exp">  
+			<input type="text" placeholder="Ability (Positive Integer)" name="new_ability">  
 			<input type="submit" value="add">
 		</div>
 	</form>
 
 	<form method="GET" action="/modify">
 		<div> Modify Existing Player's EXP (All fields must be filled): 
-			<input type="text" placeholder="Player's UID (int)" name="exist_uid">  
-			<input type="text" placeholder="Exp point (int)" name="exist_exp">  
+			<input type="text" placeholder="Player's UID (Positive Integer)" name="exist_uid">  
+			<input type="text" placeholder="Exp point (Positive Integer)" name="exist_exp">  
 			<input type="submit" value="modify">
 		</div>
 	</form>
