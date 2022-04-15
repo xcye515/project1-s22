@@ -210,9 +210,9 @@ def creature():
   type = request.args["type"]
   if type == "":
     if request.args["attr"] == "monster":
-      query = "SELECT * from Creature WHERE animal_type = NULL"
+      query = "SELECT * from Creature WHERE animal_type is NULL"
     elif request.args["attr"] == "animal":
-      query = "SELECT * from Creature WHERE monster_type = NULL"
+      query = "SELECT * from Creature WHERE monster_type is NULL"
     else:
       query = "SELECT * from Creature"
   else:
