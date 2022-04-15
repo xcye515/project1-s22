@@ -275,6 +275,11 @@ def achievement():
 @app.route('/search_world', methods=['GET', 'POST'])
 def world():
   world_id = request.args["world_id"]
+  if not world_id.isdigit():
+    message = ["Bad Input! Rejected!"]
+    context = dict(data = message)
+    return render_template("search.html", **context)
+
   if world_id == "":
     query = "SELECT * from World"
   else:
