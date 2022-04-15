@@ -136,8 +136,8 @@ def add():
     context = dict(data = message)
     return render_template("index.html", **context)
 
-  check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %s" % uid)
-  cursor = g.conn.execute(check_query)
+  check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %(uid)s")
+  cursor = g.conn.execute(check_query, {'uid': uid})
   exists = 0
   for row in cursor:
     exists = row[0]
