@@ -27,7 +27,7 @@ DB_USER = "xy2527"
 DB_PASSWORD = "helloworld"
 
 DB_SERVER = "w4111.cisxo09blonu.us-east-1.rds.amazonaws.com"
-DB_SERVER = "w4111project1part2db.cisxo09blonu.us-east-1.rds.amazonaws.com"
+#DB_SERVER = "w4111project1part2db.cisxo09blonu.us-east-1.rds.amazonaws.com"
 
 DATABASEURI = "postgresql://"+DB_USER+":"+DB_PASSWORD+"@"+DB_SERVER+"/proj1part2"
 
@@ -147,10 +147,11 @@ def add():
     upper_y_coord = row[0]
   cursor.close()
 
+
   insert_player_inworld = uid + "," + world_id + "," + str(1) + "," + str(1) + "," + str(upper_x_coord) + "," + str(upper_y_coord)
   insert_player_inworld_cmd = text("INSERT INTO Player_in_World VALUES (%s);" % insert_player_inworld)
+  
   g.conn.execute(insert_player_inworld_cmd)
-
   message = ["Insert Successful!"]
   context = dict(data = message)
   return render_template("index.html", **context)
