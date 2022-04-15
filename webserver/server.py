@@ -101,7 +101,7 @@ def search():
     table.append(row) 
   cursor.close()
   context = dict(data = table)
-  test = dict({'test1': 'test2', 'test3': 'test4' })
+  test = {'test1': 'test2', 'test3': 'test4' }
   return render_template("index.html", **test)
 
 
