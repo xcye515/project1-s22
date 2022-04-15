@@ -78,10 +78,10 @@ def search():
     elif request.args["attr"] == "exp":
       query = "SELECT p.username, p.exp FROM Player AS p"
     else:
-      uery = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
+      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid == pinw.uid"
   else:
     if request.args["attr"] == "ability":
-      uery = "SELECT p.username, p.ability FROM Player AS p"
+      query = "SELECT p.username, p.ability FROM Player AS p"
     elif request.args["attr"] == "uid":
       query = "SELECT p.username, p.uid FROM Player AS p"
     elif request.args["attr"] == "wid":
@@ -94,8 +94,8 @@ def search():
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
-	  table.append(row) 
-  cursor.close() 
+    table.append(row) 
+  cursor.close()
   context = dict(data = table)
   return render_template("index.html", **context)
 
