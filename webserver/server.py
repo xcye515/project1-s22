@@ -264,11 +264,11 @@ def world():
 
 @app.route('/search_terrain', methods=['GET', 'POST'])
 def terrain():
-  terrain_id = request.args["terrain_id"]
-  if terrain_id == "":
+  terrain_type = request.args["terrain_type"]
+  if terrain_type == "":
     query = "SELECT * from terrain"
   else:
-    query = text("SELECT * from terrain WHERE terrain_id=%s" % terrain_id)
+    query = text("SELECT * from terrain WHERE terrain_type=%s" % terrain_type)
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
