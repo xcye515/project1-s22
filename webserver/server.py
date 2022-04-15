@@ -376,6 +376,12 @@ def player_alters_terrain():
 def alter_terrain():
   player_id = request.args["player_id"]
   terrain_id = request.args["terrain_id"]
+  
+  if not player_id.isdigit() or not terrain_id.isdigit():
+    message = ["Bad Input. Rejected!"]
+    context = dict(data=message)
+    return render_template("alter_terrain.html", **context)
+
   if player_id == "" and terrain_id == "":
     query = "SELECT * from player_alters_terrain"
   elif player_id == "":
@@ -399,6 +405,13 @@ def alter_terrain():
 def new_alter_terrain():
   player_id = request.args["player_id"]
   terrain_id = request.args["terrain_id"]
+
+  if not player_id.isdigit() or not terrain_id.isdigit():
+    message = ["Bad Input. Rejected!"]
+    context = dict(data=message)
+    return render_template("alter_terrain.html", **context)
+
+
   ability = ""
   terrain_altitude = ""
   if player_id == "" or terrain_id == "":
