@@ -74,24 +74,23 @@ def search_player():
   player_name = request.args["player_name"]
   
   header = []
-  player_name_tmp = "'%" + player_name + "%'"
   if player_name != '':
     if request.args["attr"] == "ability":
       header = ['Username', 'Ability']
-      query = "SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE %(p)s"
+      query = "SELECT p.username, p.ability FROM Player AS p WHERE p.username = %(p)s"
     elif request.args["attr"] == "uid":
       header = ['Username', 'UID']
-      query = "SELECT p.username, p.uid FROM Player AS p WHERE p.username LIKE %(p)s"
+      query = "SELECT p.username, p.uid FROM Player AS p WHERE p.username = %(p)s"
     elif request.args["attr"] == "wid":
       header = ['Username', 'World ID']
-      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World as pinw WHERE p.uid = pinw.uid AND p.username LIKE %(p)s"
+      query = "SELECT p.username, pinw.world_id FROM Player AS p, Player_in_World as pinw WHERE p.uid = pinw.uid AND p.username = %(p)s"
     elif request.args["attr"] == "exp":
       header = ['Username', 'EXP Point']
-      query = "SELECT p.username, p.exp FROM Player AS p WHERE p.username LIKE %(p)s"
+      query = "SELECT p.username, p.exp FROM Player AS p WHERE p.username = %(p)s"
     else:
       header = ['Username', 'UID', 'World ID', 'EXP Point', 'Ability']
-      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid AND p.username LIKE %(p)s"
-    cursor = g.conn.execute(query, {'p': player_name_tmp})
+      query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid AND p.username = %(p)s"
+    cursor = g.conn.execute(query, {'p': player_name})
   else:
     if request.args["attr"] == "ability":
       header = ['Username', 'Ability']
