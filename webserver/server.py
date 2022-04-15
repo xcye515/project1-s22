@@ -449,8 +449,8 @@ def new_alter_terrain():
     return render_template("alter_terrain.html", **context)
 
   insert_rec_txt = player_id + "," + str(ability) + "," + terrain_id + "," + str(terrain_altitude)
-  insert_record_cmd = "INSERT INTO player_alters_terrain VALUES (%(insert_rec_txt)s);"
-  g.conn.execute(insert_record_cmd, {'insert_rec_txt': insert_rec_txt})
+  insert_record_cmd = text("INSERT INTO player_alters_terrain VALUES (%s);" % insert_rec_txt)
+  g.conn.execute(insert_record_cmd)
   message = ["Insertion succeeded."]
   context = dict(data=message)
   return render_template("alter_terrain.html", **context)
