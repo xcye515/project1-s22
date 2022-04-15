@@ -394,13 +394,16 @@ def new_alter_terrain():
     message = ["Please do not leave any field blank"]
     context = dict(data=message)
     return render_template("alter_terrain.html", **context)
-  query_ability = text("SELECT ability FROM Player WHERE player_id = %s" %  player_id)
+  
+  query_ability = text("SELECT ability FROM Player WHERE uid = %s" %  player_id)
   query_alt = text("SELECT terrain_altitude FROM terrain WHERE terrain_id = %s" % terrain_id)
   cursor = g.conn.execute(query_ability)
+  
   for row in cursor:
     ability=row[0]
   cursor.close()
   cursor = g.conn.execute(query_alt)
+  
   for row in cursor:
     terrain_altitude = row[0]
   cursor.close()
