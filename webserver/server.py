@@ -9,6 +9,8 @@ Author: Estella Ye (xy2527), Will Wang (hw2869)
 """
 
 import os
+from re import A
+from tkinter import E
 from sqlalchemy import *
 from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
@@ -75,6 +77,8 @@ def search():
   print(request.args["player_name"])
   player_name = request.args["player_name"]
   
+  header = []
+
   if player_name != '':
     player_name_tmp = "%" + player_name + "%"
     if request.args["attr"] == "ability":
@@ -99,6 +103,7 @@ def search():
     else:
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
 
+
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
@@ -108,19 +113,39 @@ def search():
   return render_template("index.html", **context)
 
 
-@app.route('/another')
-def another():
-  return render_template("anotherfile.html")
-
-
-# Example of adding new data to the database
-@app.route('/add', methods=['POST'])
+@app.route('/add', methods=['GET','POST'])
 def add():
-  name = request.form['name']
-  print(name)
-  cmd = 'INSERT INTO test(name) VALUES (:name1), (:name2)'
-  g.conn.execute(text(cmd), name1 = name, name2 = name)
-  return redirect('/')
+  name = request.args['new_player_name']
+  uid = request.args['new_uid']
+  world_id = request.args['new_world_id']
+  exp = request.args['new_exp']
+  ability = request.args['new_ability']
+
+  if name == '' or uid == '' or world_id == '' or exp == '' or ability == '':
+    message = ["Please do not leave any field blank"]
+    context = dict(data = message)
+    return render_template("index.html", **context)
+  
+  check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %s" % uid)
+  cursor = g.conn.execute(check_query)
+  exists = 0
+  for row in cursor:
+    exists = row[0]
+  cursor.close()
+
+  if exists > 0:
+    message = ["Player with the given uid already exists"]
+    context = dict(data = message)
+    return render_template("index.html", **context)
+  
+  tmp = uid + "," + "'" + name + "'" + "," + world_id + "," + exp + "," + ability
+  cmd = text("INSERT INTO Player VALUES (%s);" % tmp)
+  g.conn.execute(cmd)
+
+  message = ["Insert Successful!"]
+  context = dict(data = message)
+  return render_template("index.html", **context)
+
 
 
 @app.route('/login')
