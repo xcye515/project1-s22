@@ -63,7 +63,7 @@ def teardown_request(exception):
   except Exception as e:
     pass
 
-@app.route('/')
+@app.route('/', Method=["GET"])
 def search():
   print(request.args)
 
