@@ -402,11 +402,23 @@ def new_alter_terrain():
   for row in cursor:
     ability=row[0]
   cursor.close()
+
+  if ability == '' or ability == None:
+    message = ["Player does not exist"]
+    context = dict(data = message)
+    return render_template("alter_terrain.html", **context)
+
   cursor = g.conn.execute(query_alt)
   
   for row in cursor:
     terrain_altitude = row[0]
   cursor.close()
+
+  if terrain_altitude == '' or terrain_altitude == None:
+    message = ["Terrain does not exist"]
+    context = dict(data = message)
+    return render_template("alter_terrain.html", **context)
+
   insert_rec_txt = player_id + "," + str(ability) + "," + terrain_id + "," + str(terrain_altitude)
   insert_record_cmd = text("INSERT INTO player_alters_terrain VALUES (%s);" % insert_rec_txt)
   g.conn.execute(insert_record_cmd)
