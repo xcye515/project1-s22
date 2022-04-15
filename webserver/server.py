@@ -213,8 +213,8 @@ def terrain():
 """
 
 @app.route('/search_by_player')
-def search_by_player():
-	return render_template("search_by_player.html")	
+def search_by_p():
+  return render_template("search_by_player.html")	
 
 @app.route('/search_by_player_implement', methods=['GET', 'POST'])
 def search_by_player_implement():
@@ -258,7 +258,6 @@ def search_by_player_implement():
     table.append(row) 
   cursor.close()
   context = dict(data = table)
-
 
   return render_template("search_by_player.html", **context)
 
