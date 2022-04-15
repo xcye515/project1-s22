@@ -91,6 +91,7 @@ def search_player():
     else:
       header = ['Username', 'UID', 'World ID', 'EXP Point', 'Ability']
       query = text("SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid AND p.username LIKE '%(p)s'")
+    cursor = g.conn.execute(query, {'p': player_name_tmp})
   else:
     if request.args["attr"] == "ability":
       header = ['Username', 'Ability']
@@ -107,9 +108,8 @@ def search_player():
     else:
       header = ['Username', 'UID', 'World ID', 'EXP Point', 'Ability']
       query = "SELECT p.username, p.uid, pinw.world_id, p.exp, p.ability FROM Player AS p, Player_in_World AS pinw WHERE p.uid = pinw.uid"
+    cursor = g.conn.execute(query)
 
-
-  cursor = g.conn.execute(query, {'p': player_name_tmp})
   table = []
   table.append(header)
   for row in cursor:
