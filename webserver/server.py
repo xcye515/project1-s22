@@ -152,8 +152,8 @@ def add():
   insert_player_cmd = text("INSERT INTO Player VALUES (%s);" % insert_player_txt)
   g.conn.execute(insert_player_cmd)
 
-  get_world_coord = text("SELECT upper_x_coord, upper_y_coord FROM World WHERE world_id = %s" % world_id)
-  cursor = g.conn.execute(get_world_coord)
+  get_world_coord = "SELECT upper_x_coord, upper_y_coord FROM World WHERE world_id = %(world_id)s"
+  cursor = g.conn.execute(get_world_coord, {'world_id': world_id})
   for row in cursor:
     upper_x_coord = row[0]
     upper_y_coord = row[0]
@@ -161,9 +161,9 @@ def add():
 
 
   insert_player_inworld = uid + "," + world_id + "," + str(1) + "," + str(1) + "," + str(upper_x_coord) + "," + str(upper_y_coord)
-  insert_player_inworld_cmd = text("INSERT INTO Player_in_World VALUES (%s);" % insert_player_inworld)
+  insert_player_inworld_cmd = "INSERT INTO Player_in_World VALUES (%(insert)s);"
   
-  g.conn.execute(insert_player_inworld_cmd)
+  g.conn.execute(insert_player_inworld_cmd, {'insert': insert_player_inworld})
   message = ["Insert Successful!"]
   context = dict(data = message)
   return render_template("index.html", **context)
@@ -183,8 +183,8 @@ def modify():
     context = dict(data=message)
     return render_template("index.html", **context)
 
-  check_query = text("SELECT COUNT(*) FROM Player WHERE uid = %s" % uid)
-  cursor = g.conn.execute(check_query)
+  check_query = "SELECT COUNT(*) FROM Player WHERE uid = %(uid)s"
+  cursor = g.conn.execute(check_query, {'uid': uid})
   exists = 0
   for row in cursor:
     exists = row[0]
@@ -196,8 +196,8 @@ def modify():
     return render_template("index.html", **context)
 
   delete_temp = "SET exp = " + exp
-  delete_cmd = text("UPDATE Player %s WHERE uid = %s" % (delete_temp, str(uid)))
-  g.conn.execute(delete_cmd)
+  delete_cmd = "UPDATE Player %(delete_temp)s WHERE uid = %(uid)s"
+  g.conn.execute(delete_cmd, {'delete_temp': delete_temp, 'uid': str(uid)})
   
   message = ["Modify Successful!"]
   context = dict(data=message)
@@ -215,8 +215,8 @@ def item():
     item_q = "SELECT * FROM Tool"
   else:
     tool_type = "'"+tool_type+"'"
-    item_q = text("SELECT * FROM Tool WHERE tool_type = %s" % tool_type)
-  cursor = g.conn.execute(item_q)
+    item_q = "SELECT * FROM Tool WHERE tool_type = %(tool_type)s"
+  cursor = g.conn.execute(item_q, {'tool_type' : tool_type})
   table = []
   header = ['Tool ID', 'Tool Type']
   table.append(header)
@@ -239,12 +239,12 @@ def creature():
   else:
     type = "'"+type+"'"
     if request.args["attr"] == "monster":
-      query = text("SELECT * from Creature WHERE monster_type=%s"%type)
+      query = "SELECT * from Creature WHERE monster_type=%(type)s"
     elif request.args["attr"] == "animal":
-      query = text("SELECT * from Creature WHERE animal_type=%s"%type)
+      query = "SELECT * from Creature WHERE animal_type=%(type)s"
     else:
-      query = text("SELECT * from Creature WHERE animal_type=%s or monster_type=%s"%(type,type))
-  cursor = g.conn.execute(query)
+      query = "SELECT * from Creature WHERE animal_type=%s or monster_type=%(type)s"
+  cursor = g.conn.execute(query, {'type':type})
   table = []
   header = ['Creature ID', 'Animal Type', 'Monster Type', 'Name']
   table.append(header)
@@ -261,8 +261,8 @@ def achievement():
     query = "SELECT * from Achievement"
   else:
     achievement_title = "'"+achievement_title+"'"
-    query = text("SELECT * from Achievement WHERE achievement_title=%s"%achievement_title)
-  cursor = g.conn.execute(query)
+    query = "SELECT * from Achievement WHERE achievement_title=%(achievement_title)s"
+  cursor = g.conn.execute(query, {'achievement_title': achievement_title})
   table = []
   header = ['Achievement Title', 'Description']
   table.append(header)
@@ -278,8 +278,8 @@ def world():
   if world_id == "":
     query = "SELECT * from World"
   else:
-    query = text("SELECT * from World WHERE world_id=%s" % world_id)
-  cursor = g.conn.execute(query)
+    query = "SELECT * from World WHERE world_id=%(world_id)s"
+  cursor = g.conn.execute(query, {'world_id':world_id})
   table = []
   header = ['World ID', 'World Upper x Coord', 'World Upper y Coord']
   table.append(header)
@@ -296,8 +296,8 @@ def terrain():
     query = "SELECT * from terrain"
   else:
     terrain_type = "'" + terrain_type + "'"
-    query = text("SELECT * from terrain WHERE terrain_type=%s" % terrain_type)
-  cursor = g.conn.execute(query)
+    query = "SELECT * from terrain WHERE terrain_type=%(terrain_type)s"
+  cursor = g.conn.execute(query, {'terrain_type':terrain_type})
   table = []
   header = ['Terrain ID', 'Terrain Type', 'Initial Altitude']
   table.append(header)
@@ -322,8 +322,8 @@ def search_by_player_implement():
     return render_template("search_by_player.html", **context)
 
   player_name_tmp = "'" + player_name + "'"
-  get_uid = text("SELECT uid FROM Player WHERE username = %s" % player_name_tmp)
-  cursor = g.conn.execute(get_uid)
+  get_uid = "SELECT uid FROM Player WHERE username = %(player_name_tmp)s"
+  cursor = g.conn.execute(get_uid, {'player_name_tmp': player_name_tmp})
   uid = ''
   for row in cursor:
     uid = row[0]
@@ -333,8 +333,8 @@ def search_by_player_implement():
     context = dict(data = message)
     return render_template("search_by_player.html", **context)
 
-  get_world_id = text("SELECT world_id FROM Player_in_World WHERE uid = %s" % uid)
-  cursor = g.conn.execute(get_world_id)
+  get_world_id = "SELECT world_id FROM Player_in_World WHERE uid = %(uid)s"
+  cursor = g.conn.execute(get_world_id, {'uid':uid})
   for row in cursor:
     world_id = row[0]
   cursor.close()
@@ -342,22 +342,22 @@ def search_by_player_implement():
   header = []
   if player_name != '':
     if request.args["attr"] == "msg":
-      query = text("SELECT content, time FROM send_message WHERE uid = %s" % uid)
+      query = "SELECT content, time FROM send_message WHERE uid = %(uid)s"
       header = ['Content', 'Time']
     elif request.args["attr"] == "item":
-      query = text("SELECT tool_id, since FROM player_owns_tool WHERE uid = %s" % uid)
+      query = "SELECT tool_id, since FROM player_owns_tool WHERE uid = %(uid)s"
       header = ['Tool_ID', 'Since When']
     elif request.args["attr"] == "achive":
-      query = text("SELECT achievement_title, time FROM player_achieves WHERE uid = %s" % uid)
+      query = "SELECT achievement_title, time FROM player_achieves WHERE uid = %(uid)s"
       header = ['achievement_title', 'Since When']
     elif request.args["attr"] == "others":
-      query = text("SELECT uid, x_coordinate, y_coordinate FROM Player_In_World WHERE world_id = %s" % world_id)
+      query = "SELECT uid, x_coordinate, y_coordinate FROM Player_In_World WHERE world_id = %(world_id)s"
       header = ['Player UID', 'x_coord', 'y_coord']
     elif request.args["attr"] == "interact":
-      query = text("SELECT uid, cid, tool_id, tool_type, time FROM player_interacts_with_creatures_using_tools WHERE uid = %s" % uid)
+      query = "SELECT uid, cid, tool_id, tool_type, time FROM player_interacts_with_creatures_using_tools WHERE uid = %(uid)s"
       header = ['Player UID', 'Creature ID', 'Tool ID', 'Tool Type', 'Time']
 
-  cursor = g.conn.execute(query)
+  cursor = g.conn.execute(query, {'uid': uid, 'world_id': world_id})
   table = []
   table.append(header)
   for row in cursor:
@@ -385,12 +385,12 @@ def alter_terrain():
   if player_id == "" and terrain_id == "":
     query = "SELECT * from player_alters_terrain"
   elif player_id == "":
-    query = text("SELECT * from player_alters_terrain WHERE terrain_id = %s" % terrain_id)
+    query = "SELECT * from player_alters_terrain WHERE terrain_id = %(terrain_id)s" 
   elif terrain_id == "":
-    query = text("SELECT * from player_alters_terrain WHERE uid = %s" % player_id)
+    query = "SELECT * from player_alters_terrain WHERE uid = %(player_id)s"
   else:
-    query = text("SELECT * from player_alters_terrain WHERE terrain_id = %s AND uid = %s" % (terrain_id,player_id))
-  cursor = g.conn.execute(query)
+    query = "SELECT * from player_alters_terrain WHERE terrain_id = %(terrain_id)s AND uid = %(player_id)s"
+  cursor = g.conn.execute(query, {'terrain_id': terrain_id, 'player_id': player_id})
   table = []
   header = ['UID', 'Ability', 'Terrain ID', 'Terrain Altitude', 'Record ID']
   table.append(header)
@@ -419,9 +419,9 @@ def new_alter_terrain():
     context = dict(data=message)
     return render_template("alter_terrain.html", **context)
   
-  query_ability = text("SELECT ability FROM Player WHERE uid = %s" %  player_id)
-  query_alt = text("SELECT terrain_altitude FROM terrain WHERE terrain_id = %s" % terrain_id)
-  cursor = g.conn.execute(query_ability)
+  query_ability = "SELECT ability FROM Player WHERE uid = %(player_id)s" 
+  query_alt = "SELECT terrain_altitude FROM terrain WHERE terrain_id = %(terrain_id)s"
+  cursor = g.conn.execute(query_ability, {'terrain_id': terrain_id, 'player_id': player_id})
   
   for row in cursor:
     ability=row[0]
@@ -432,7 +432,7 @@ def new_alter_terrain():
     context = dict(data = message)
     return render_template("alter_terrain.html", **context)
 
-  cursor = g.conn.execute(query_alt)
+  cursor = g.conn.execute(query_alt, {'terrain_id': terrain_id, 'player_id': player_id})
   
   for row in cursor:
     terrain_altitude = row[0]
@@ -444,8 +444,8 @@ def new_alter_terrain():
     return render_template("alter_terrain.html", **context)
 
   insert_rec_txt = player_id + "," + str(ability) + "," + terrain_id + "," + str(terrain_altitude)
-  insert_record_cmd = text("INSERT INTO player_alters_terrain VALUES (%s);" % insert_rec_txt)
-  g.conn.execute(insert_record_cmd)
+  insert_record_cmd = "INSERT INTO player_alters_terrain VALUES (%(insert_rec_txt)s);"
+  g.conn.execute(insert_record_cmd, {'insert_rec_txt': insert_rec_txt})
   message = ["Insertion succeeded."]
   context = dict(data=message)
   return render_template("alter_terrain.html", **context)
