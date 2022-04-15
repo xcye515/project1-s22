@@ -196,8 +196,8 @@ def modify():
     return render_template("index.html", **context)
 
   delete_temp = "SET exp = " + exp
-  delete_cmd = "UPDATE Player %(delete_temp)s WHERE uid = %(uid)s"
-  g.conn.execute(delete_cmd, {'delete_temp': delete_temp, 'uid': uid})
+  delete_cmd = text("UPDATE Player %s WHERE uid = %s" % (delete_temp, uid))
+  g.conn.execute(delete_cmd)
   
   message = ["Modify Successful!"]
   context = dict(data=message)
