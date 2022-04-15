@@ -66,7 +66,7 @@ def teardown_request(exception):
 @app.route('/')
 def index():
   player_name = 'Estella'
-  query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username LIKE '%s'", player_name)
+  query = text("SELECT p.username, p.ability FROM Player AS p WHERE p.username = " + player_name)
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
