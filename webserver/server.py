@@ -309,7 +309,7 @@ def search_by_player_implement():
   player_name = request.args["player_name"]
 
   if player_name == '':
-    message = ["Please do not leave any field blank"]
+    message = ["Please do not leave the name blank"]
     context = dict(data = message)
     return render_template("search_by_player.html", **context)
 
@@ -357,12 +357,30 @@ def search_by_player_implement():
   return render_template("search_by_player.html", **context)
 
 
-
-"""
 @app.route('/alter_terrain', methods=['GET', 'POST'])
-def alter():
+def player_alters_terrain():
   return render_template("alter_terrain.html")
-"""
+
+@app.route('/alter_terrain', methods=['GET', 'POST'])
+def alter_terrain():
+  player_id = request.args["player_id"]
+  terrain_id = request.args["terrain_id"]
+  if player_id == "" and terrain_id == "":
+    query = "SELECT * from player_alters_terrain"
+  elif player_id == "":
+    query = text("SELECT * from player_alters_terrain WHERE terrain_id = %s" % terrain_id)
+  elif terrain_id == "":
+    query = text("SELECT * from player_alters_terrain WHERE uid = %s" % player_id)
+  else:
+    query = text("SELECT * from player_alters_terrain WHERE terrain_id = %s AND uid = %s" % (terrain_id,player_id))
+  cursor = g.conn.execute(query)
+  table = []
+  for row in cursor:
+    table.append(row)
+  cursor.close()
+  context = dict(data=table)
+  return render_template("alter_terrain.html", **context)
+
 
 if __name__ == "__main__":
   import click
