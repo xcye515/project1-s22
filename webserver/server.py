@@ -407,7 +407,7 @@ def new_alter_terrain():
   for row in cursor:
     terrain_altitude = row[0]
   cursor.close()
-  insert_rec_txt = player_id + "," + ability + "," + terrain_id + "," + terrain_altitude
+  insert_rec_txt = player_id + "," + str(ability) + "," + terrain_id + "," + str(terrain_altitude)
   insert_record_cmd = text("INSERT INTO player_alters_terrain VALUES (%s);" % insert_rec_txt)
   g.conn.execute(insert_record_cmd)
   message = ["Insertion succeeded."]
