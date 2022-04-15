@@ -28,7 +28,7 @@ DB_PASSWORD = "helloworld"
 
 DB_SERVER = "w4111.cisxo09blonu.us-east-1.rds.amazonaws.com"
 
-DATABASEURI = "postgresql://"+DB_USER+":"+DB_PASSWORD+"@"+DB_SERVER+"/w4111"
+DATABASEURI = "postgresql://"+DB_USER+":"+DB_PASSWORD+"@"+DB_SERVER+"/proj1part2"
 
 
 #
@@ -94,9 +94,7 @@ def search():
   cursor = g.conn.execute(query)
   table = []
   for row in cursor:
-	  table.append(row)
-
-
+	  table.append(row) 
   cursor.close() 
   context = dict(data = table)
   return render_template("index.html", **context)
