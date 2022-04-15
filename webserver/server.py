@@ -268,6 +268,7 @@ def terrain():
   if terrain_type == "":
     query = "SELECT * from terrain"
   else:
+    terrain_type = "'" + terrain_type + "'"
     query = text("SELECT * from terrain WHERE terrain_type=%s" % terrain_type)
   cursor = g.conn.execute(query)
   table = []
