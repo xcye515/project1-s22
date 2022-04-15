@@ -8,15 +8,24 @@
 
 
 <body>
-   <h1> Search Database</h1>
+    <h1> Search Database</h1>
+    <div>
+        <h4><a href='/index'>Homepage</a></h4>
+    </div>
 
-   <form method="GET" action="/alter_terrain_implement">
+    <form method="GET" action="/alter_terrain_implement">
         <div> Query Player-Alters-Terrain History (Leave blank if some input not needed):</div>
         <div> Terrain ID: <input type="text" name="terrain_id"> </div>
         <div>Player ID: <input type="text" name="player_id"> </div>
         <div><input type="submit" value="search"></div>
-   </form>
+    </form>
 
+    <form method="GET" action="/alter_terrain_add_implement">
+      <div> Add Player-Alters-Terrain Record (All fields must be filled.):</div>
+          <div> Terrain ID: <input type="text" name="terrain_id"> </div>
+          <div>Player ID: <input type="text" name="player_id"> </div>
+          <div><input type="submit" value="search"></div>
+    </form>
 
    <div>
       {% for n in data %}

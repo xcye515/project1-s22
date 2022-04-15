@@ -384,6 +384,33 @@ def alter_terrain():
   return render_template("alter_terrain.html", **context)
 
 
+@app.route('/alter_terrain_add_implement', methods=['GET', 'POST'])
+def new_alter_terrain():
+  player_id = request.args["player_id"]
+  terrain_id = request.args["terrain_id"]
+  ability = ""
+  terrain_altitude = ""
+  if player_id == "" or terrain_id == "":
+    message = ["Please do not leave any field blank"]
+    context = dict(data=message)
+    return render_template("alter_terrain.html", **context)
+  query_ability = text("SELECT ability FROM Player WHERE player_id = %s" %  player_id)
+  query_alt = text("SELECT terrain_altitude FROM terrain WHERE terrain_id = %s" % terrain_id)
+  cursor = g.conn.execute(query_ability)
+  for row in cursor:
+    ability=row[0]
+  cursor.close()
+  cursor = g.conn.execute(query_alt)
+  for row in cursor:
+    terrain_altitude = row[0]
+  cursor.close()
+  insert_rec_txt = player_id + "," + ability + "," + terrain_id + "," + terrain_altitude
+  insert_record_cmd = text("INSERT INTO player_alters_terrain VALUES (%s);" % insert_rec_txt)
+  g.conn.execute(insert_record_cmd)
+  message = ["Insertion succeeded."]
+  context = dict(data=message)
+  return render_template("alter_terrain.html", **context)
+
 if __name__ == "__main__":
   import click
 
