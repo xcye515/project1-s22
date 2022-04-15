@@ -226,7 +226,8 @@ def search_by_player_implement():
     context = dict(data = message)
     return render_template("search_by_player.html", **context)
 
-  get_uid = text("SELECT uid FROM Player WHERE username = %s" % player_name)
+  player_name_tmp = "'" + player_name + "'"
+  get_uid = text("SELECT uid FROM Player WHERE username = %s" % player_name_tmp)
   cursor = g.conn.execute(get_uid)
   for row in cursor:
     uid = row[0]
