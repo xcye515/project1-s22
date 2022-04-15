@@ -232,7 +232,7 @@ def search_by_player_implement():
   for row in cursor:
     uid = row[0]
   cursor.close()
-  if uid == '':
+  if uid == None or uid == '':
     message = ["Player does not exist"]
     context = dict(data = message)
     return render_template("search_by_player.html", **context)
